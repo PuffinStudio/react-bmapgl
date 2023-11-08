@@ -31,7 +31,11 @@ const isServer = typeof window === "undefined";
  */
 export default (hocProps: WrapperHocProps) => (WrappedComponent: any) => {
   if(isServer){
-    return null
+    return class extends Component{
+      render(): React.ReactNode {
+        return null
+      }
+    }
   }
   return class MapApiLoaderHOC extends Component<
     MapApiLoaderProps,
@@ -120,7 +124,7 @@ export default (hocProps: WrapperHocProps) => (WrappedComponent: any) => {
       return loaded ? (
         <WrappedComponent {...this.props} />
       ) : (
-        <div>loading...</div>
+        null
       );
     }
   };
